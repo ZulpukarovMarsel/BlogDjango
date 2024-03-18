@@ -3,6 +3,7 @@ from .models import Post
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
+from django.views.generic import ListView
 
 def post_list(request):
     post_list = Post.published.all()
@@ -28,4 +29,8 @@ def post_detail(request, year, month, day, post):
                   'blogs/post/detail.html',
                   {'post': post})
 
-
+class PostListView(ListView):
+    queryset = Post.objects.all()
+    context_object_name = 'posts'
+    paginate_by = 3
+    template_name = 'blogs/post/list.html'
