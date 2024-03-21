@@ -45,9 +45,13 @@ def post_detail(request, year, month, day, post):
                              publish__year=year,
                              publish__month=month,
                              publish__day=day)
+    comments = post.comments.filter(active=True)
+    form = CommentForm()
     return render(request,
                   'blogs/post/detail.html',
-                  {'post': post})
+                  {'post': post,
+                   'comments': comments,
+                   'form': form})
 
 
 class PostListView(ListView):
